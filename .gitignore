@@ -216,3 +216,23 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# FRR alignment project artifacts
+models/
+checkpoints/
+outputs/
+data/outputs/
+data/raw_external/
+data/generated/
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# Keep prompt-only datasets in GitHub for cloud inference reproducibility.
+!data/prompts/*.jsonl
+
+# DPO training data can grow large and may include generated model outputs.
+data/dpo/*.jsonl
+!data/dpo/*_sample.jsonl
+!data/dpo/.gitkeep
