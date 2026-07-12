@@ -1,0 +1,34 @@
+# Baseline models for cloud prompt feeding.
+#
+# Usage idea:
+#   python scripts/generate_model_responses.py \
+#     --model Qwen/Qwen2.5-0.5B-Instruct \
+#     --model-name qwen25_05b \
+#     --input data/prompts/prompt_pool_fr_v2.jsonl \
+#     --output data/outputs/baseline_generations/qwen25_05b_v2.jsonl
+#
+# Notes:
+#   - Start with Qwen2.5-0.5B to verify the pipeline.
+#   - Llama-3.1 and some Mistral models may require Hugging Face access approval.
+#   - Keep generated responses under data/outputs/ and do not commit them.
+
+models:
+  - name: qwen25_05b
+    repo: Qwen/Qwen2.5-0.5B-Instruct
+    role: fast_pipeline_smoke_test
+
+  - name: french_orca_dpo_05b
+    repo: BounharAbdelaziz/Qwen2.5-0.5B-DPO-French-Orca
+    role: small_dpo_comparison
+
+  - name: qwen25_7b
+    repo: Qwen/Qwen2.5-7B-Instruct
+    role: stronger_qwen_baseline
+
+  - name: llama31_8b
+    repo: meta-llama/Llama-3.1-8B-Instruct
+    role: cross_family_baseline
+
+  - name: mistral_7b_v03
+    repo: mistralai/Mistral-7B-Instruct-v0.3
+    role: european_open_model_baseline
