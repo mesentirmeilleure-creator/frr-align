@@ -24,7 +24,10 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from frr_align.weighting.frr_weight_engine import compute_weight_detailed
+try:
+    from frr_align.weighting.frr_weight_engine import compute_weight_detailed
+except ModuleNotFoundError:
+    compute_weight_detailed = None
 
 
 REQUIRED_FIELDS = ("prompt", "chosen", "rejected")
@@ -99,7 +102,10 @@ def make_dataset(
             if tokenizer is not None
             else str(row.get("prompt", "")).strip()
         )
-        weight = compute_weight_detailed(str(row.get("prompt", ""))).as_dict()
+        if compute_weight_detailed is None:
+            weight = {"w_final": 1.0}
+        else:
+            weight = compute_weight_detailed(str(row.get("prompt", ""))).as_dict()
         records.append(
             {
                 "prompt": prompt,
